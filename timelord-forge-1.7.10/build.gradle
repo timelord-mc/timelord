@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+version = modVersion
+group = modGroup
+archivesBaseName = "$modBaseName-forge-1.7.10"
+
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+configurations {
+    shade
+    compile.extendsFrom shade
+}
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "eclipse"
+
+    replaceIn "TimeLord.java"
+    replace "@@MODID@@", project.modBaseName
+    replace "@@VERSION@@", project.version
+
+    replaceIn "mcmod.info"
+    replace "@@MODID@@", project.modBaseName
+    replace "@@VERSION@@", project.version
+
+    srgExtra "PK: org/slf4j ru/xunto/org/slf4j"
+}
+
+dependencies {
+    shade project(":timelord-common")
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
+}

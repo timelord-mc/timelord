@@ -1,4 +1,4 @@
-package pw.tales.timelord.forge_1_12_2;
+package pw.tales.timelord.forge_1_7_10;
 
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;

@@ -1,4 +1,4 @@
-package pw.tales.timelord.forge_1_12_2;
+package pw.tales.timelord.forge_1_7_10;
 
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -20,12 +20,16 @@ public class ForgeWorld implements IWorld {
 
     @Override
     public boolean shouldSync() {
-        return rules.getBoolean(TimeLord.SYNC_GAMERULE);
+        return rules.getGameRuleBooleanValue(TimeLord.SYNC_GAMERULE);
     }
 
     @Override
     public int getSyncOffset() {
-        return rules.getInt(TimeLord.SYNC_OFFSET);
+        try {
+            return Integer.parseInt(rules.getGameRuleStringValue(TimeLord.SYNC_OFFSET));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     @Override

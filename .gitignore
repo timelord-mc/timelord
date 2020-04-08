@@ -4,3 +4,6 @@
 /timelord-common/build/
 /.gradle/
 /.idea/
+/timelord-forge-1.7.10/.gradle/
+/timelord-forge-1.7.10/build/
+/timelord-forge-1.7.10/eclipse/

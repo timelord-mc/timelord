@@ -2,4 +2,5 @@ rootProject.name = 'timelord'
 
 include 'timelord-common'
 include 'timelord-forge-1.12'
+include 'timelord-forge-1.7.10'
 

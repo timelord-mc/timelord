@@ -1,0 +1,5 @@
+rootProject.name = 'timelord'
+
+include 'timelord-common'
+include 'timelord-forge-1.12'
+
